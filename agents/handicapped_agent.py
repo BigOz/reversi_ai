@@ -34,13 +34,13 @@ class HandicappedAgent(Agent):
         if random.randint(1, 100) <= self.wrong:
             return self.get_random_move(legal_moves)
         else:
-            return self.get_intelligent_move(game_state, legal_moves)
+            return self.get_intelligent_move(game_state)
 
 
     def get_random_move(self, legal_moves):
         return random.choice(legal_moves)
 
-    def get_intelligent_move(self, game_state, legal_moves):
+    def get_intelligent_move(self, game_state):
         game_state = copy.deepcopy(game_state)
         move = self.monte_carlo_search(game_state)
         return move
@@ -65,7 +65,7 @@ class HandicappedAgent(Agent):
                 # one child, which is the 'passing move' Node where control changes over
                 # to the other player but the board doesn't change.
                 amnt_children = 1
-            root = Node(game_state, None, amnt_children)
+            root = Node(game_state, None, amnt_children, 0)
 
         # even if this is a "recycled" node we've already used,
         # remove its parent as it is now considered our root level node
@@ -143,7 +143,7 @@ class HandicappedAgent(Agent):
                     # no moves, so turn passes to other player
                     next_state = self.reversi.next_state(
                         cur_node.game_state, None)
-                    pass_node = Node(next_state, None, 1)
+                    pass_node = Node(next_state, None, 1, cur_node.depth + 1)
                     cur_node.add_child(pass_node)
                     self.state_node[next_state] = pass_node
                     cur_node = pass_node
@@ -159,7 +159,7 @@ class HandicappedAgent(Agent):
                 assert len(unexpanded) > 0
                 move = random.choice(unexpanded)
                 state = self.reversi.next_state(cur_node.game_state, move)
-                child = Node(state, move, len(legal_moves))
+                child = Node(state, move, len(legal_moves), cur_node.depth + 1)
                 cur_node.add_child(child)
                 self.state_node[state] = child
                 return child
@@ -216,7 +216,7 @@ class HandicappedAgent(Agent):
 
 class Node:
 
-    def __init__(self, game_state, move, amount_children):
+    def __init__(self, game_state, move, amount_children, depth):
         self.game_state = game_state
         self.plays = 0
         self.wins = 0
@@ -224,6 +224,7 @@ class Node:
         self.parent = None
         self.moves_expanded = set()  # which moves have we tried at least once
         self.moves_unfinished = amount_children  # amount of moves not fully expanded
+        self.depth = depth
 
         # the move that led to this child state
         self.move = move
