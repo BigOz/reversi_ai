@@ -44,6 +44,8 @@ def main(**kwargs):
 
     amount = input_args.get('amount', 1)
     make_silent(input_args.get('silent', False))
+    make_record_data(input_args.get('record', False))
+    make_filename(input_args.get('filename', "test_file.txt"))
 
     print('About to run {} games, black as {}, white as {}.'.format(
         amount, input_args['BlackAgent'].__name__, input_args['WhiteAgent'].__name__)
@@ -65,6 +67,7 @@ def main(**kwargs):
         message = '{} wins! {}-{}'.format(
                 color_name[winner], white_score, black_score)
         info(message)
+        record_data(black_score - white_score)
         summary.append(message)
 
     seconds_spent = time.time() - start

@@ -9,11 +9,13 @@ EMPTY = 0
 color_name = {BLACK: 'Black', WHITE: 'White'}
 opponent = {BLACK: WHITE, WHITE: BLACK}
 
+
 silent = False
 def make_silent(val):
     assert val is True or val is False
     global silent
     silent = val
+
 
 def info(message):
     if not silent:
@@ -22,10 +24,29 @@ def info(message):
         else:
             print(message)
 
+
+record = None
+def make_record_data(val):
+    assert val is True or val is False
+    global record
+    record = val
+
+output_filename = None
+def make_filename(filename):
+    global output_filename
+    output_filename = filename
+
+def record_data(score):
+    if record:
+        output_file = open(output_filename, 'a')
+        score_string = "{}\n".format(score)
+        output_file.write(score_string)
+
+
 def info_newline():
     if not silent:
         print()
-        
+
 def to_offset(move, size):
     x, y = move
     return y * size + x
