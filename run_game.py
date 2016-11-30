@@ -2,7 +2,7 @@
 from sys import argv
 import time
 from game.reversi import Reversi
-from agents import random_agent, monte_carlo_agent, human_agent
+from agents import random_agent, monte_carlo_agent, human_agent, handicapped_agent
 from util import *
 from prop_parse import prop_parse
 
@@ -12,6 +12,7 @@ prop_names = {
         'monte_carlo': monte_carlo_agent.MonteCarloAgent,
         'random': random_agent.RandomAgent,
         'human': human_agent.HumanAgent,
+        'handicapped': handicapped_agent.HandicappedAgent,
         }
 
 
@@ -22,10 +23,24 @@ def main(**kwargs):
 
     if len(argv) <= 1 and len(kwargs) <= 1:
         print('necessary inputs:')
-        print('  BlackAgent=, WhiteAgent=,')
-        print('    choices: q_learning, monte_carlo, random, human')
+        print('  BlackAgent=')
+        print('  WhiteAgent=')
+        print('choices:')
+        print('  q_learning')
+        print('  monte_carlo')
+        print('    mc_sim_time=(seconds to think)')
+        print('  random')
+        print('  human')
+        print('  handicapped')
+        print('    hc_sim_time=(seconds to think)')
+        print('    hc_depth=(how many layers deep to search)')
+        print('    hc_wrong=(how many times in 100 to make a random move)')
         print('optional inputs:')
-        print('  size=(board size), amount=(#games), silent=(True/False), sim_time=(seconds for monte carlo sim)')
+        print('size=(board size)')
+        print('amount=(#games)')
+        print('silent=(True/False)')
+        print('record=(True/False)')
+        print('filename=(file to write results to)')
         quit()
 
     for k, v in input_args.items():
@@ -35,12 +50,6 @@ def main(**kwargs):
         elif v == 'q_learning':
             from agents import q_learning_agent
             input_args[k] = q_learning_agent.QLearningAgent
-
-    if any(val == monte_carlo_agent.MonteCarloAgent for val in input_args.values()) \
-            and not input_args.get('sim_time', False):
-        print('sim_time field required for monte_carlo agent.')
-        print('quitting.')
-        quit()
 
     amount = input_args.get('amount', 1)
     make_silent(input_args.get('silent', False))

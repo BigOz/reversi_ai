@@ -11,8 +11,7 @@ class MonteCarloAgent(Agent):
     def __init__(self, reversi, color, **kwargs):
         self.color = color
         self.reversi = reversi
-        self.sim_time = kwargs.get('sim_time', 5)
-
+        self.sim_time = kwargs.get('mc_sim_time', 5)
         # map states to nodes for quick lookup
         self.state_node = {}
 
