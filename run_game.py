@@ -33,7 +33,7 @@ def main(**kwargs):
         print('  human')
         print('  handicapped')
         print('    hc_sim_time=(seconds to think)')
-        print('    hc_depth=(how many layers deep to search)')
+        print('    hc_max_sim=(max simulations to run)')
         print('    hc_wrong=(how many times in 100 to make a random move)')
         print('optional inputs:')
         print('size=(board size)')

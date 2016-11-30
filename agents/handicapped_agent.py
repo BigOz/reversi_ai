@@ -12,10 +12,11 @@ class HandicappedAgent(Agent):
         self.reversi = reversi
         self.color = color
         self.sim_time = kwargs.get('hc_sim_time', 5)
-        self.depth = kwargs.get('hc_depth', 20)
+        self.max_sim = kwargs.get('hc_max_sim', 500)
         self.wrong = kwargs.get('hc_wrong', 0)
         # map states to nodes for quick lookup
         self.state_node = {}
+        print("{} {} {}".format(self.sim_time, self.max_sim, self.wrong))
 
     def reset(self):
         pass
@@ -73,7 +74,9 @@ class HandicappedAgent(Agent):
 
         sim_count = 0
         now = time.time()
-        while time.time() - now < self.sim_time and root.moves_unfinished > 0:
+        while (time.time() - now < self.sim_time and
+               root.moves_unfinished > 0 and
+               sim_count <= self.max_sim):
             picked_node = self.tree_policy(root)
             result = self.simulate(picked_node.game_state)
             self.back_prop(picked_node, result)
