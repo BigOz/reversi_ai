@@ -12,11 +12,10 @@ class HandicappedAgent(Agent):
         self.reversi = reversi
         self.color = color
         self.sim_time = kwargs.get('hc_sim_time', 5)
-        self.max_sim = kwargs.get('hc_max_sim', 500)
+        self.max_sim = kwargs.get('hc_max_sim', 1000000)
         self.wrong = kwargs.get('hc_wrong', 0)
         # map states to nodes for quick lookup
         self.state_node = {}
-        print("{} {} {}".format(self.sim_time, self.max_sim, self.wrong))
 
     def reset(self):
         pass

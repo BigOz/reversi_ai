@@ -76,7 +76,6 @@ def main(**kwargs):
         message = '{} wins! {}-{}'.format(
                 color_name[winner], white_score, black_score)
         info(message)
-        record_data(black_score - white_score)
         summary.append(message)
 
     seconds_spent = time.time() - start
@@ -90,6 +89,7 @@ def main(**kwargs):
             100, 'White': white_wins / (black_wins + white_wins) * 100}
     print('Black won {}%'.format(wins['Black']))
     print('White won {}%'.format(wins['White']))
+    record_data(black_wins)
 
     return wins
 
