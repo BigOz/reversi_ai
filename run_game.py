@@ -26,7 +26,6 @@ def main(**kwargs):
         print('  BlackAgent=')
         print('  WhiteAgent=')
         print('choices:')
-        print('  q_learning')
         print('  monte_carlo')
         print('    mc_sim_time=(seconds to think)')
         print('  random')
@@ -47,9 +46,6 @@ def main(**kwargs):
         # convert 'human' to human_agent.HumanAgent, etc
         if v in prop_names:
             input_args[k] = prop_names[v]
-        elif v == 'q_learning':
-            from agents import q_learning_agent
-            input_args[k] = q_learning_agent.QLearningAgent
 
     amount = input_args.get('amount', 1)
     make_silent(input_args.get('silent', False))

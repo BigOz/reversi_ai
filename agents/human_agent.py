@@ -1,5 +1,5 @@
 from agents.agent import Agent
-from agents import MonteCarloAgent
+from agents import monte_carlo_agent
 
 class HumanAgent(Agent):
     """This agent is controlled by a human, who inputs moves via stdin."""

@@ -1,9 +1,9 @@
 echo 'compiling with cython...';
 cython -3 util.pyx -o util.c;
-cython -3 game/reversi.pyx -o game/reversi.c;
-cython -3 game/board.pyx -o game/board.c;
-cython -3 agents/monte_carlo_agent.pyx -o agents/monte_carlo_agent.c;
-cython -3 agents/handicapped_agent.pyx -o agents/handicapped_agent.c;
+cython -3 game/reversi.py -o game/reversi.c;
+cython -3 game/board.py-o game/board.c;
+cython -3 agents/monte_carlo_agent.py -o agents/monte_carlo_agent.c;
+cython -3 agents/handicapped_agent.py -o agents/handicapped_agent.c;
 
 echo 'removing old .so files...';
 rm *.so agents/*.so game/*.so;
